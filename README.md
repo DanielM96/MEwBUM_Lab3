@@ -32,3 +32,7 @@ Funkcja importująca dane z plików CSV do przestrzeni roboczej. W porównaniu d
 ___importfile_slow.m___
 
 Pierwotna wersja powyższej funkcji.
+
+# Wymagania
+
+MATLAB R2015a lub nowszy.
