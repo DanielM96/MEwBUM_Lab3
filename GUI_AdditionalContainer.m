@@ -107,18 +107,42 @@ else
     passat_fft = abs(passat_fft);
     passat_fft = passat_fft(1:N/2+1);
     passat_fft = passat_fft/(N/2);
+    % uœrednianie
+    prob = zeros(20,25000);
+    meanVal = zeros(1,25000);
+    for i = 1:20
+        for k = 1:25000
+            prob(i,k) = passatData(k+(i-1)*25000);
+        end
+    end
+    for k = 1:25000
+        meanVal(k) = sum(prob(:,k))/14;
+    end
     
     axes(handles.axes2_data_fft);
-    plot(f,passat_fft);
+    plot(f,20*log10(passat_fft));
     zoom on;
     title('Widmo zarejestrowanego sygna³u');
     xlabel('Czêstotliwoœæ [Hz]');
-    ylabel('Amplituda');
+    ylabel('Amplituda [dB]');
     set(gca,'FontSize',8);
     
     % spektrogram
+    % nie, widmo uœrednione
+    N = length(meanVal);
+    df = Fs/N;
+    f = 0:df:Fs/2;
+    passat_fft = fft(passatData);
+    passat_fft = abs(passat_fft);
+    passat_fft = passat_fft(1:N/2+1);
+    passat_fft = passat_fft/(N/2);
     axes(handles.axes3_data_spectre);
-    spectrogram(passatData,[],[],[],Fs);
+%     spectrogram(passatData,[],[],[],Fs);
+    plot(f,20*log10(passat_fft));
+    title('Uœrednione widmo zarejestrowanego sygna³u');
+    xlabel('Czêstotliwoœæ [Hz]');
+    ylabel('Amplituda [dB]');
+    set(gca,'FontSize',8);
     zoom on;
     set(gca,'FontSize',8);
 end
